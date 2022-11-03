@@ -1,13 +1,11 @@
 ﻿
-Console.ForegroundColor = ConsoleColor.Yellow;
-Console.WriteLine("To Enter a new product - follow the steps | To quit - enter \"Q\"");
 
-Console.ResetColor();
-
-var keepGoing = true;
-var addMore = true;
+bool keepGoing = true;
+bool addMore = true;
 string choice = "";
 
+
+// The menu
 void ShowMenu()
 {
     Console.ForegroundColor = ConsoleColor.Blue;
@@ -17,11 +15,17 @@ void ShowMenu()
     choice = Console.ReadLine();
 }
 
+// Making the list and adding products
 List<Product> products = new List<Product>();
 void AddMoreProducts()
 {
     while (addMore)
     {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("To Enter a new product - follow the steps | To quit - enter \"Q\"");
+
+        Console.ResetColor();
+
         Console.Write("Enter a Category: ");
         string category = Console.ReadLine();
 
@@ -29,12 +33,35 @@ void AddMoreProducts()
         {
             break;
         }
+        else if(category.Trim() == "")
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You must type at least one character.");
+            Console.ResetColor();
+            break;
+        }
 
         Console.Write("Enter a Product Name: ");
         string productName = Console.ReadLine();
 
+        if (productName.Trim() == "")
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You must type at least one character.");
+            Console.ResetColor();
+            break;
+        }
+
         Console.Write("Enter a Price: ");
         int price = Convert.ToInt32(Console.ReadLine());
+
+        if (price <= 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You must type a valid price.");
+            Console.ResetColor();
+            break;
+        }
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("The product was successfully added!");
@@ -65,9 +92,10 @@ void AddMoreProducts()
     
     ShowMenu();
 }
+// Call AddMoreProducts the first time
 AddMoreProducts();
 
-
+// Search for product name
 void SearchProducts() {
     Console.Write("Enter a Product Name: ");
     string searchName = Console.ReadLine();
@@ -90,13 +118,12 @@ void SearchProducts() {
     ShowMenu();
 }
 
-
+// Choices on the menu
 while(keepGoing)
 {
     switch (choice.ToLower().Trim())
     {
         case ("p"):
-            //addMore = true;
             AddMoreProducts();
             break;
 
@@ -109,7 +136,10 @@ while(keepGoing)
             break;
 
         default:
-            keepGoing = false;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Not a valid choice");
+            Console.ResetColor();
+            ShowMenu();
             break;
     }
 }
