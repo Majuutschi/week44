@@ -4,8 +4,18 @@ Console.WriteLine("To Enter a new product - follow the steps | To quit - enter \
 
 Console.ResetColor();
 
+var keepGoing = true;
 var addMore = true;
 string choice = "";
+
+void ShowMenu()
+{
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.WriteLine("To enter a new product - enter: \"P\" | To search fort product - enter \"S\" | to quit - enter \"Q\"");
+
+    Console.ResetColor();
+    choice = Console.ReadLine();
+}
 
 List<Product> products = new List<Product>();
 void AddMoreProducts()
@@ -52,15 +62,15 @@ void AddMoreProducts()
     Console.WriteLine("");
     Console.WriteLine("".PadRight(20) + "Total amount:".PadRight(20) + sumOfList);
     Console.WriteLine("--------------------------------------------------");
-
+    
+    ShowMenu();
 }
 AddMoreProducts();
+
 
 void SearchProducts() {
     Console.Write("Enter a Product Name: ");
     string searchName = Console.ReadLine();
-
-    // string searchMatch = searchName.Where(product => product.ProductName.Contains(searchName));
 
     List<Product> searchedList = products.OrderBy(product => product.Price).ToList();
     foreach (Product product in searchedList)
@@ -77,30 +87,34 @@ void SearchProducts() {
         }
     }
     Console.WriteLine("--------------------------------------------------");
-}
-
-void ShowMenu()
-{
-    Console.ForegroundColor = ConsoleColor.Blue;
-    Console.WriteLine("To enter a new product - enter: \"P\" | To search fort product - enter \"S\" | to quit - enter \"Q\"");
-
-    Console.ResetColor();
-    choice = Console.ReadLine();
-}
-ShowMenu();
-
-
-if (choice.ToLower().Trim() == "p")
-{
-    addMore = true;
-    AddMoreProducts();
-
-}
-else if (choice.ToLower().Trim() == "s")
-{
-    SearchProducts();
     ShowMenu();
 }
+
+
+while(keepGoing)
+{
+    switch (choice.ToLower().Trim())
+    {
+        case ("p"):
+            //addMore = true;
+            AddMoreProducts();
+            break;
+
+        case("s"):
+            SearchProducts();
+            break;
+
+        case ("q"):
+            keepGoing = false;
+            break;
+
+        default:
+            keepGoing = false;
+            break;
+    }
+}
+
+
  
 
 
