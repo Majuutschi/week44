@@ -61,7 +61,7 @@ void AddMoreProducts()
             Console.WriteLine("You must type a valid price.");
             Console.ResetColor();
             break;
-        }
+        } 
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("The product was successfully added!");
